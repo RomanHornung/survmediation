@@ -1,0 +1,5 @@
+exportPattern(metest, metestone, pcalcdelta, pcalcsim)
+
+importFrom("timereg", "aalen")
+importFrom("mvtnorm", "rmvnorm")
+importFrom("stats", "as.formula", "lm", "pnorm", "rnorm", "quantile")

@@ -1,0 +1,11 @@
+Package: survmediation
+Type: Package
+Title: Mediation analysis for (high-dimensional molecular) survival data
+Version: 1.0
+Date: 2017-06-23
+Author: Roman Hornung
+Maintainer: Roman Hornung <hornung@ibe.med.uni-muenchen.de>
+Depends: R (>= 3.1.0), mvtnorm, timereg
+Description: Mediation analysis for (high-dimensional molecular) survival data. The testing framework by Lange & Hansen (2011) is implemented for the case of a binary exposure.
+License: GPL-2
+Encoding: UTF-8
