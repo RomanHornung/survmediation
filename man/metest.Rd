@@ -9,7 +9,7 @@ Univariately test for mediation effect with respect to one or several numerical 
 }
 \usage{
 metest(times, cens, expos, M, z = NULL, simul = TRUE, npvalsim = 1e+5, riskincr, 
-  exposinflc = TRUE, minflc = TRUE)
+  exposinflc = TRUE, minflc = TRUE, returnmodels = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -46,6 +46,9 @@ logical. TRUE if the influence of the exposure should be modelled as constant ov
   \item{minflc}{
 logical. TRUE if the influence of the mediator should be modelled as constant over time. FALSE if this influence should be modelled as time-varying.
 }
+  \item{returnmodels}{
+logical. TRUE if the Aalen model(s) (equation (1) in Lange & Hansen (2011)) and the mediator model(s) (equation (2) in Lange & Hansen (2011)) should be returned. Default is FALSE.
+}
 }
 \details{
 For details see Lange & Hansen (2011).
@@ -54,7 +57,11 @@ For details see Lange & Hansen (2011).
 \code{metest} returns an object of class \code{metest}.
 An object of class "\code{metest}" is a list containing the following components: 
 \item{pvalues}{ vector of length equal to the number of (potental) mediators tested, where
-the j-th entry corresponds to the p-value for the j-th (potential) mediator }
+the j-th entry corresponds to the p-value for the j-th (potential) mediator. }
+\item{params}{ If \code{returnmodels = FALSE} (default), this will be \code{NULL}. If \code{returnmodels = TRUE} this
+  will contain the Aalen model(s) (equation (1) in Lange & Hansen (2011)) and the mediator model(s) (equation (2) in Lange & Hansen (2011)).
+  In the case of more than one tested mediator this will be a list of lists, each of which contains two elements "aalenfit" and "ols_m".
+  In the case of only one tested mediator this will be a list with two elements "aalenfit" and "ols_m". }
 }
 \references{
 Lange, T., Hansen, J.V. (2011) Direct and indirect effects in a survival context. Epidemiology 22:575–581.
@@ -145,6 +152,11 @@ simdata$cens <- cens
 # First mediator only:
 metest(times=simdata$times, cens=simdata$cens, expos=simdata$expos, M=simdata[,1], 
        simul = TRUE, npvalsim = 10000, riskincr=TRUE, exposinflc = TRUE, minflc = TRUE)
+	   
+# First mediator only, where Aalen model and mediator model is returned:
+metest(times=simdata$times, cens=simdata$cens, expos=simdata$expos, M=simdata[,1], 
+       simul = TRUE, npvalsim = 10000, riskincr=TRUE, exposinflc = TRUE, minflc = TRUE, returnmodels = TRUE)
+
 # All (potential) mediators:
 metest(times=simdata$times, cens=simdata$cens, expos=simdata$expos, 
        M=as.matrix(simdata[,1:10]), simul = TRUE, npvalsim = 10000, riskincr=TRUE, 
